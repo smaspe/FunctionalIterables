@@ -7,7 +7,19 @@ import java.util.Iterator;
  */
 public class _ {
 
-    public static <T> Iterable<T> iter(final T[] array) {
+    private static final Iterator EMPTY = new Iterator() {
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return null;
+        }
+    };
+
+    public static <T> Iterable<T> iter(T[] array) {
         return () -> new Iterator<T>() {
             public int i = 0;
 
@@ -20,10 +32,23 @@ public class _ {
             public T next() {
                 return array[i++];
             }
+        };
+    }
+    public static <T> Iterable<T> chain(Iterable<Iterable<T>> iterables) {
+        Iterator<Iterable<T>> iterator = iterables.iterator();
+        return () -> new Iterator<T>() {
+            Iterator<T> current = EMPTY;
+            @Override
+            public boolean hasNext() {
+                while (!current.hasNext() && iterator.hasNext()) {
+                    current = iterator.next().iterator();
+                }
+                return current.hasNext();
+            }
 
             @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+            public T next() {
+                return current.next();
             }
         };
     }
