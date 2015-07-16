@@ -19,7 +19,7 @@ public class _ {
         }
     };
 
-    public static <T> Iterable<T> iter(T[] array) {
+    public static <T> Iterable<T> iter(T... array) {
         return () -> new Iterator<T>() {
             public int i = 0;
 
@@ -34,10 +34,16 @@ public class _ {
             }
         };
     }
+
+    public static <T> Iterable<T> chain(Iterable<T>... iterables) {
+        return chain(iter(iterables));
+    }
+
     public static <T> Iterable<T> chain(Iterable<Iterable<T>> iterables) {
         Iterator<Iterable<T>> iterator = iterables.iterator();
         return () -> new Iterator<T>() {
             Iterator<T> current = EMPTY;
+
             @Override
             public boolean hasNext() {
                 while (!current.hasNext() && iterator.hasNext()) {

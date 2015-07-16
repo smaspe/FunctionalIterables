@@ -26,7 +26,7 @@ public class Test_ extends TestCase {
         List<String> first = Arrays.asList("one", "bis");
         List<String> empty = Arrays.asList();
         List<String> second = Arrays.asList("two");
-        Iterator<String> iterator = _.chain(Arrays.asList(first, empty, second)).iterator();
+        Iterator<String> iterator = _.chain(first, empty, second).iterator();
         assertTrue(iterator.hasNext());
         assertEquals("one", iterator.next());
         assertTrue(iterator.hasNext());
