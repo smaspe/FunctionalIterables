@@ -6,6 +6,10 @@ import java.util.NoSuchElementException;
 
 /**
  * Created by Simon on 15/07/15.
+ *
+ * Utils class for before Java8 Streams. filters, map, chaining...
+ *
+ * Returned Iterables are never null
  */
 public class _<T> implements Iterable<T> {
 
@@ -20,14 +24,9 @@ public class _<T> implements Iterable<T> {
             return null;
         }
     };
-    private Iterable<T> delegate;
-
-    public _(Iterable<T> delegate) {
-        this.delegate = delegate;
-    }
 
     public static <T> _<T> iter(T... array) {
-        return _(() -> new Iterator<T>() {
+        return from(() -> new Iterator<T>() {
             public int i = 0;
 
             @Override
@@ -42,12 +41,16 @@ public class _<T> implements Iterable<T> {
         });
     }
 
+    public Iterable<T> chainWith(Iterable<T> next) {
+        return _.<T>chain(delegate, next);
+    }
+
     public static <T> _<T> chain(Iterable<T>... iterables) {
         return chain(iter(iterables));
     }
 
     public static <T> _<T> chain(Iterable<Iterable<T>> iterables) {
-        return _(() -> new Iterator<T>() {
+        return from(() -> new Iterator<T>() {
             Iterator<Iterable<T>> iterator = iterables.iterator();
             Iterator<T> current = EMPTY;
 
@@ -66,8 +69,12 @@ public class _<T> implements Iterable<T> {
         });
     }
 
+    public <R> _<R> map(Func<T, R> func) {
+        return map(delegate, func);
+    }
+
     public static <T, R> _<R> map(Iterable<T> input, Func<T, R> func) {
-        return _(() -> new Iterator<R>() {
+        return from(() -> new Iterator<R>() {
             Iterator<T> iter = input.iterator();
 
             @Override
@@ -82,8 +89,12 @@ public class _<T> implements Iterable<T> {
         });
     }
 
+    public _<T> filter(Func<T, Boolean> func) {
+        return filter(delegate, func);
+    }
+
     public static <T> _<T> filter(Iterable<T> input, Func<T, Boolean> func) {
-        return _(() -> new Iterator<T>() {
+        return from(() -> new Iterator<T>() {
             boolean hasKnownNext = false;
             Iterator<T> iter = input.iterator();
             T nextValue = null;
@@ -114,20 +125,14 @@ public class _<T> implements Iterable<T> {
         });
     }
 
-    public static <T> _<T> _(Iterable<T> delegate) {
-        return new _(delegate);
+    private Iterable<T> delegate;
+
+    public _(Iterable<T> delegate) {
+        this.delegate = delegate;
     }
 
-    public Iterable<T> chainWith(Iterable<T> next) {
-        return chain(delegate, next);
-    }
-
-    public <R> _<R> map(Func<T, R> func) {
-        return map(delegate, func);
-    }
-
-    public _<T> filter(Func<T, Boolean> func) {
-        return filter(delegate, func);
+    public static <T> _<T> from(Iterable<T> delegate) {
+        return new _<>(delegate);
     }
 
     @Override
