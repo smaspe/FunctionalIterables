@@ -156,6 +156,27 @@ public class _<T> implements Iterable<T> {
         });
     }
 
+    public boolean all(Func<T, Boolean> test) {
+        return all(this, test);
+    }
+
+    public static <T> boolean all(Iterable<T> input, Func<T, Boolean> test) {
+        return !any(input, (t -> !test.call(t)));
+    }
+
+    public boolean any(Func<T, Boolean> test) {
+        return any(this, test);
+    }
+
+    public static <T> boolean any(Iterable<T> input, Func<T, Boolean> test) {
+        for (T t : input) {
+            if (test.call(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public <V> _<Pair<T, V>> zip(Iterable<V> with) {
         return zip(this, with);
     }

@@ -69,11 +69,21 @@ public class Test_ extends TestCase {
     }
 
     public void testZip() {
-        List<_.Pair<Integer, String>> result = _.iter(1,2,3,4).zip(_.iter("one", "two", "three", "four", "five")).collect();
+        List<_.Pair<Integer, String>> result = _.iter(1, 2, 3, 4).zip(_.iter("one", "two", "three", "four", "five")).collect();
         assertEquals(1, result.get(0).first.intValue());
         assertEquals("one", result.get(0).second);
         assertEquals(4, result.get(3).first.intValue());
         assertEquals("four", result.get(3).second);
         assertEquals(4, result.size());
+    }
+
+    public void testAny() {
+        assertTrue(_.iter(1, 3, 4, 5, 6).any(t -> t % 2 == 0));
+        assertFalse(_.iter(1, 3, 5, 7).any(t -> t % 2 == 0));
+    }
+
+    public void testAll() {
+        assertFalse(_.iter(1, 3, 4, 5, 6).all(t -> t % 2 == 0));
+        assertTrue(_.iter(2, 4, 6).all(t -> t % 2 == 0));
     }
 }
