@@ -19,17 +19,26 @@ A few extra things that are packaged with:
 - `Pair<U,V>` a simple class that holds 2 values
 - `Func<T,R>` a simple functional interface with a method that has 1 parameter and returns something
 
-# Create an instance
+# Usage
+
+## Create an instance
 - `iter`
 - `from`
 - `repeat`
 - `chain`
 
-# Functional stuff
+## Functional stuff that return more iterables
 - `map`
 - `filter`
 - `zip`
 - Add stuff here
+
+## Functional stuff that return single values
+- `any`
+- `all`
+- TODO
+- `sum` or `reduce` or both
+- `find` (wrap around filter...)
 
 # Collecting
 - `collect`. Gives you an `ArrayList`. Don't try to `collect` `repeat`.
