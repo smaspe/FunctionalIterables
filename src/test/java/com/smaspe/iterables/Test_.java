@@ -58,6 +58,16 @@ public class Test_ extends TestCase {
         assertEquals(3, result.size());
     }
 
+    public void testRepeat() {
+        Iterator<String> result = _.repeat("foo").iterator();
+        assertEquals("foo", result.next());
+        assertEquals("foo", result.next());
+        assertEquals("foo", result.next());
+        assertEquals("foo", result.next());
+        assertEquals("foo", result.next());
+        // A teacher once told me that 5 is a good approximation for infinity.
+    }
+
     public void testZip() {
         List<_.Pair<Integer, String>> result = _.iter(1,2,3,4).zip(_.iter("one", "two", "three", "four", "five")).collect();
         assertEquals(1, result.get(0).first.intValue());

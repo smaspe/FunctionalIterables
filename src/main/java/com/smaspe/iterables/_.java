@@ -56,6 +56,21 @@ public class _<T> implements Iterable<T> {
         });
     }
 
+    public static <T> _<T> repeat(T value) {
+        return from(() -> new Iterator<T>() {
+
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+
+            @Override
+            public T next() {
+                return value;
+            }
+        });
+    }
+
     public static <T> _<T> chain(Iterable<T>... iterables) {
         return chain(iter(iterables));
     }
