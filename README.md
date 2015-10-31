@@ -40,7 +40,7 @@ A few extra things that are packaged with:
 - `sum` or `reduce` or both
 - `find` (wrap around filter...)
 
-# Collecting
+## Collecting
 - `collect`. Gives you an `ArrayList`. Don't try to `collect` `repeat`.
 
 ## TODO
