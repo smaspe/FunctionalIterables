@@ -6,9 +6,9 @@ import java.util.NoSuchElementException;
 
 /**
  * Created by Simon on 15/07/15.
- *
+ * <p>
  * Utils class for before Java8 Streams. filters, map, chaining...
- *
+ * <p>
  * Returned Iterables are never null
  */
 public class _<T> implements Iterable<T> {
@@ -24,6 +24,21 @@ public class _<T> implements Iterable<T> {
             return null;
         }
     };
+
+    private Iterable<T> delegate;
+
+    private _(Iterable<T> delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return delegate.iterator();
+    }
+
+    public static <T> _<T> from(Iterable<T> delegate) {
+        return new _<>(delegate);
+    }
 
     public static <T> _<T> iter(T... array) {
         return from(() -> new Iterator<T>() {
@@ -41,17 +56,13 @@ public class _<T> implements Iterable<T> {
         });
     }
 
-    public Iterable<T> chainWith(Iterable<T> next) {
-        return _.<T>chain(delegate, next);
-    }
-
     public static <T> _<T> chain(Iterable<T>... iterables) {
         return chain(iter(iterables));
     }
 
-    public static <T> _<T> chain(Iterable<Iterable<T>> iterables) {
+    public static <T> _<T> chain(Iterable<? extends Iterable<T>> iterables) {
         return from(() -> new Iterator<T>() {
-            Iterator<Iterable<T>> iterator = iterables.iterator();
+            Iterator<? extends Iterable<T>> iterator = iterables.iterator();
             Iterator<T> current = EMPTY;
 
             @Override
@@ -64,13 +75,18 @@ public class _<T> implements Iterable<T> {
 
             @Override
             public T next() {
+                hasNext();
                 return current.next();
             }
         });
     }
 
+    public Iterable<T> chainWith(Iterable<T> next) {
+        return _.<T>chain(this, next);
+    }
+
     public <R> _<R> map(Func<T, R> func) {
-        return map(delegate, func);
+        return map(this, func);
     }
 
     public static <T, R> _<R> map(Iterable<T> input, Func<T, R> func) {
@@ -90,7 +106,7 @@ public class _<T> implements Iterable<T> {
     }
 
     public _<T> filter(Func<T, Boolean> func) {
-        return filter(delegate, func);
+        return filter(this, func);
     }
 
     public static <T> _<T> filter(Iterable<T> input, Func<T, Boolean> func) {
@@ -125,24 +141,34 @@ public class _<T> implements Iterable<T> {
         });
     }
 
-    private Iterable<T> delegate;
-
-    public _(Iterable<T> delegate) {
-        this.delegate = delegate;
+    public <V> _<Pair<T, V>> zip(Iterable<V> with) {
+        return zip(this, with);
     }
 
-    public static <T> _<T> from(Iterable<T> delegate) {
-        return new _<>(delegate);
-    }
+    public static <U, V> _<Pair<U, V>> zip(Iterable<U> firsts, Iterable<V> seconds) {
+        return from(() -> new Iterator<Pair<U, V>>() {
+            Iterator<U> iterFirst = firsts.iterator();
+            Iterator<V> iterSecond = seconds.iterator();
 
-    @Override
-    public Iterator<T> iterator() {
-        return delegate.iterator();
+            @Override
+            public boolean hasNext() {
+                return iterFirst.hasNext() && iterSecond.hasNext();
+            }
+
+            @Override
+            public Pair<U, V> next() {
+                return new Pair<>(iterFirst.next(), iterSecond.next());
+            }
+        });
     }
 
     public ArrayList<T> collect() {
+        return collect(this);
+    }
+
+    public static <T> ArrayList<T> collect(Iterable<T> input) {
         ArrayList<T> res = new ArrayList<>();
-        for (T t : delegate) {
+        for (T t : input) {
             res.add(t);
         }
         return res;
@@ -150,5 +176,15 @@ public class _<T> implements Iterable<T> {
 
     public interface Func<T, R> {
         R call(T input);
+    }
+
+    public static class Pair<U, V> {
+        public U first;
+        public V second;
+
+        private Pair(U first, V second) {
+            this.first = first;
+            this.second = second;
+        }
     }
 }

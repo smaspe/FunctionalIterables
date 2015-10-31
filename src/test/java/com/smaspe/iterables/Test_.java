@@ -2,7 +2,6 @@ package com.smaspe.iterables;
 
 import junit.framework.TestCase;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -15,11 +14,14 @@ public class Test_ extends TestCase {
     public void testIter() {
         String[] values = new String[]{"a", "b"};
         Iterator<String> iterator = _.iter(values).iterator();
-        assertTrue(iterator.hasNext());
         assertEquals("a", iterator.next());
-        assertTrue(iterator.hasNext());
         assertEquals("b", iterator.next());
         assertFalse(iterator.hasNext());
+    }
+
+    public void testCollect() {
+        List<Integer> result = _.iter(1, 2, 3, 4).collect();
+        assertEquals(4, result.size());
     }
 
     public void testChain() {
@@ -27,12 +29,41 @@ public class Test_ extends TestCase {
         List<String> empty = Arrays.asList();
         List<String> second = Arrays.asList("two");
         Iterator<String> iterator = _.chain(first, empty, second).iterator();
-        assertTrue(iterator.hasNext());
         assertEquals("one", iterator.next());
-        assertTrue(iterator.hasNext());
         assertEquals("bis", iterator.next());
-        assertTrue(iterator.hasNext());
         assertEquals("two", iterator.next());
         assertFalse(iterator.hasNext());
+
+        iterator = _.chain(Arrays.asList(first, empty, second)).iterator();
+        assertEquals("one", iterator.next());
+        assertEquals("bis", iterator.next());
+        assertEquals("two", iterator.next());
+        assertFalse(iterator.hasNext());
+
+    }
+
+    public void testMap() {
+        List<Integer> result = _.iter(1, 2, 3, 4).map(i -> i * i).collect();
+        assertEquals(1, result.get(0).intValue());
+        assertEquals(4, result.get(1).intValue());
+        assertEquals(9, result.get(2).intValue());
+        assertEquals(16, result.get(3).intValue());
+    }
+
+    public void testFilter() {
+        List<Integer> result = _.iter(1, 2, 3, 4, 5, 6).filter(i -> i % 2 == 0).collect();
+        assertEquals(2, result.get(0).intValue());
+        assertEquals(4, result.get(1).intValue());
+        assertEquals(6, result.get(2).intValue());
+        assertEquals(3, result.size());
+    }
+
+    public void testZip() {
+        List<_.Pair<Integer, String>> result = _.iter(1,2,3,4).zip(_.iter("one", "two", "three", "four", "five")).collect();
+        assertEquals(1, result.get(0).first.intValue());
+        assertEquals("one", result.get(0).second);
+        assertEquals(4, result.get(3).first.intValue());
+        assertEquals("four", result.get(3).second);
+        assertEquals(4, result.size());
     }
 }
