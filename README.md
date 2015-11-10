@@ -50,3 +50,4 @@ A few extra things that are packaged with:
 - `until` function to `collect`
 - `count` param to `repeat`
 - Currying helpers
+- Similar helpers with Maps (possibly just collecting an `Iterable<Map.Entry<K, V>>` into a `Map`, the rest should be transparent)
