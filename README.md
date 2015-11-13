@@ -1,3 +1,5 @@
+[ ![Download](https://api.bintray.com/packages/smaspe/Default/FunctionalIterables/images/download.svg) ](https://bintray.com/smaspe/Default/FunctionalIterables/_latestVersion)
+
 # Iterables
 A bunch of Iterable functions for more fluent functionnal programming, for Java 7
 
