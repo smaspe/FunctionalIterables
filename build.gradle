@@ -1,12 +1,42 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.4"
+}
+
 group 'com.github.smaspe'
 version '0.0.1'
 
-repositories {
-    mavenCentral()
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
 }
 
-apply plugin: 'java'
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "Default"
+        name = "FunctionalIterables"
+    }
 }
