@@ -16,3 +16,9 @@ hs_err_pid*
 
 @ IntelliJ
 .idea/
+
+# Build files
+build/
+
+# Secret properties
+local.properties
