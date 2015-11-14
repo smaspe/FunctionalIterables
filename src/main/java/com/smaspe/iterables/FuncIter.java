@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * <p>
  * Returned Iterables are never null
  */
-public class _<T> implements Iterable<T> {
+public class FuncIter<T> implements Iterable<T> {
 
     private static final Iterator EMPTY = new Iterator() {
         @Override
@@ -27,7 +27,7 @@ public class _<T> implements Iterable<T> {
 
     private Iterable<T> delegate;
 
-    private _(Iterable<T> delegate) {
+    private FuncIter(Iterable<T> delegate) {
         this.delegate = delegate;
     }
 
@@ -36,11 +36,11 @@ public class _<T> implements Iterable<T> {
         return delegate.iterator();
     }
 
-    public static <T> _<T> from(Iterable<T> delegate) {
-        return new _<>(delegate);
+    public static <T> FuncIter<T> from(Iterable<T> delegate) {
+        return new FuncIter<>(delegate);
     }
 
-    public static <T> _<T> iter(T... array) {
+    public static <T> FuncIter<T> iter(T... array) {
         return from(() -> new Iterator<T>() {
             public int i = 0;
 
@@ -56,7 +56,7 @@ public class _<T> implements Iterable<T> {
         });
     }
 
-    public static <T> _<T> repeat(T value) {
+    public static <T> FuncIter<T> repeat(T value) {
         return from(() -> new Iterator<T>() {
 
             @Override
@@ -71,11 +71,11 @@ public class _<T> implements Iterable<T> {
         });
     }
 
-    public static <T> _<T> chain(Iterable<T>... iterables) {
+    public static <T> FuncIter<T> chain(Iterable<T>... iterables) {
         return chain(iter(iterables));
     }
 
-    public static <T> _<T> chain(Iterable<? extends Iterable<T>> iterables) {
+    public static <T> FuncIter<T> chain(Iterable<? extends Iterable<T>> iterables) {
         return from(() -> new Iterator<T>() {
             Iterator<? extends Iterable<T>> iterator = iterables.iterator();
             Iterator<T> current = EMPTY;
@@ -97,14 +97,14 @@ public class _<T> implements Iterable<T> {
     }
 
     public Iterable<T> chainWith(Iterable<T> next) {
-        return _.<T>chain(this, next);
+        return FuncIter.<T>chain(this, next);
     }
 
-    public <R> _<R> map(Func<T, R> func) {
+    public <R> FuncIter<R> map(Func<T, R> func) {
         return map(this, func);
     }
 
-    public static <T, R> _<R> map(Iterable<T> input, Func<T, R> func) {
+    public static <T, R> FuncIter<R> map(Iterable<T> input, Func<T, R> func) {
         return from(() -> new Iterator<R>() {
             Iterator<T> iter = input.iterator();
 
@@ -120,11 +120,11 @@ public class _<T> implements Iterable<T> {
         });
     }
 
-    public _<T> filter(Func<T, Boolean> func) {
+    public FuncIter<T> filter(Func<T, Boolean> func) {
         return filter(this, func);
     }
 
-    public static <T> _<T> filter(Iterable<T> input, Func<T, Boolean> func) {
+    public static <T> FuncIter<T> filter(Iterable<T> input, Func<T, Boolean> func) {
         return from(() -> new Iterator<T>() {
             boolean hasKnownNext = false;
             Iterator<T> iter = input.iterator();
@@ -177,11 +177,11 @@ public class _<T> implements Iterable<T> {
         return false;
     }
 
-    public <V> _<Pair<T, V>> zip(Iterable<V> with) {
+    public <V> FuncIter<Pair<T, V>> zip(Iterable<V> with) {
         return zip(this, with);
     }
 
-    public static <U, V> _<Pair<U, V>> zip(Iterable<U> firsts, Iterable<V> seconds) {
+    public static <U, V> FuncIter<Pair<U, V>> zip(Iterable<U> firsts, Iterable<V> seconds) {
         return from(() -> new Iterator<Pair<U, V>>() {
             Iterator<U> iterFirst = firsts.iterator();
             Iterator<V> iterSecond = seconds.iterator();

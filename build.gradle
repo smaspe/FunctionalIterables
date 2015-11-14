@@ -2,6 +2,10 @@ buildscript {
     repositories {
         jcenter()
     }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+    }
 }
 
 plugins {
@@ -9,7 +13,7 @@ plugins {
 }
 
 group 'com.github.smaspe'
-version '0.0.1'
+version '0.1.0'
 
 
 allprojects {
@@ -20,11 +24,19 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'java'
+    apply plugin: 'me.tatarka.retrolambda'
+
+    retrolambda {
+        jdk System.getenv("JAVA8_HOME")
+        oldJdk System.getenv("JAVA7_HOME")
+        javaVersion JavaVersion.VERSION_1_7
+    }
 }
 
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
 }
 
 Properties properties = new Properties()

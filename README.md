@@ -7,12 +7,12 @@ Or Maven
     <dependency>
       <groupId>com.github.smaspe</groupId>
       <artifactId>iterables</artifactId>
-      <version>0.0.1</version>
+      <version>0.1.0</version>
     </dependency>
 
 Or Gradle
 
-    compile group:'com.github.smaspe', name:'iterables', version: '0.0.1'
+    compile group:'com.github.smaspe', name:'iterables', version: '0.1.0'
 
 
 # Iterables
@@ -22,11 +22,13 @@ Because other solutions are too big and complex, this fit in a single file and d
 
 # Basics
 
-## `_`
-`_` is the base class. It is short, and also I am not good with names. It is an `Iterable`. Functions are usually provided as instance functions and static functions which take an `Iterable` as first parameter. For example, `public <R> _<R> map(Func<T, R> func);` is available as `public static <R> _<R> map(Iterable<T> input, Func<T, R> func);`
+## `FuncIter`
+`FuncIter` is the base class. `_` was nice, but java complains and threatens to stop supporting `_` as a class name.
+
+It is an `Iterable`. Functions are usually provided as instance functions and static functions which take an `Iterable` as first parameter. For example, `public <R> _<R> map(Func<T, R> func);` is available as `public static <R> _<R> map(Iterable<T> input, Func<T, R> func);`
 
 ## Functions
-Functions are devided in 3 groups:
+Functions are divided in 3 groups:
 - Creators, to create instances of `_` from `Iterable`, arrays, single values, lists of iterables...
 - Functions, to manipulate things
 - Collectors, to retrieve the content of the `Iterable` in another format (typically a `List`. Actually an `ArrayList`. There are discussion as to whether a function should declare `List` or `ArrayList`. I prefer `ArrayList`. If you want to know why, ask me.)
@@ -61,7 +63,7 @@ A few extra things that are packaged with:
 - `collect`. Gives you an `ArrayList`. Don't try to `collect` `repeat`.
 
 ## TODO
-- [ ] Actually work with java 7 and retrolambda
+- [x] Actually work with java 7 and retrolambda
 - [x] Publish on maven central, add the gradle line here
 - [ ] Create the basic functions.
     - [x] wrappers and creators,
