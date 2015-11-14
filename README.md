@@ -1,7 +1,22 @@
+# Use it
+
 [ ![Download](https://api.bintray.com/packages/smaspe/Default/FunctionalIterables/images/download.svg) ](https://bintray.com/smaspe/Default/FunctionalIterables/_latestVersion)
 
+Or Maven
+
+    <dependency>
+      <groupId>com.github.smaspe</groupId>
+      <artifactId>iterables</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+
+Or Gradle
+
+    compile group:'com.github.smaspe', name:'iterables', version: '0.0.1'
+
+
 # Iterables
-A bunch of Iterable functions for more fluent functionnal programming, for Java 7
+A bunch of Iterable functions for more fluent functional programming, for Java 7
 
 Because other solutions are too big and complex, this fit in a single file and does a limited number of things.
 
@@ -46,10 +61,25 @@ A few extra things that are packaged with:
 - `collect`. Gives you an `ArrayList`. Don't try to `collect` `repeat`.
 
 ## TODO
-- Actually work with java 7 and retrolambda
-- Create the basic functions. ~~iter(array)~~, ~~chain~~, flatten, ~~map~~, ~~filter~~, ~~find~~, reduce, max, sum (longs and doubles?), ~~zip~~, all?, any?, range? (This start to look a lot like python builtins)
-- Publish on maven central, add the gradle line here
-- `until` function to `collect`
-- `count` param to `repeat`
-- Currying helpers
-- Similar helpers with Maps (possibly just collecting an `Iterable<Map.Entry<K, V>>` into a `Map`, the rest should be transparent)
+- [ ] Actually work with java 7 and retrolambda
+- [x] Publish on maven central, add the gradle line here
+- [ ] Create the basic functions.
+    - [x] wrappers and creators,
+    - [x] chain,
+    - [ ] flatten,
+    - [x] map,
+    - [x] filter,
+    - [x] find,
+    - [ ] reduce?,
+    - [ ] max,
+    - [ ] sum (longs and doubles?),
+    - [x] zip,
+    - [x] all,
+    - [x] any,
+    - [ ] range?
+    - (This start to look a lot like python builtins)
+- [x] Publish on maven central, add the gradle line here
+- [ ] `until` function to `collect`
+- [ ] `count` param to `repeat`
+- [ ] Currying helpers
+- [ ] Similar helpers with Maps (possibly just collecting an `Iterable<Map.Entry<K, V>>` into a `Map`, the rest should be transparent)
