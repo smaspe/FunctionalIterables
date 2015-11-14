@@ -50,6 +50,7 @@ bintray {
     pkg {
         repo = "Default"
         name = "FunctionalIterables"
+        publish = true
     }
 }
 
