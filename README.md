@@ -57,9 +57,10 @@ A few extra things that are packaged with:
 ## Functional stuff that return single values
 - `any`
 - `all`
+- `firstOr`
 - TODO
 - `sum` or `reduce` or both
-- `find` (wrap around filter...)
+- `find` (= filter + first...)
 
 ## Collecting
 - `collect`. Gives you an `ArrayList`. Don't try to `collect` `repeat`.
