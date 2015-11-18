@@ -22,3 +22,6 @@ build/
 
 # Secret properties
 local.properties
+
+# Gradle
+!gradle/wrapper/*
