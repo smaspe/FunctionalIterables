@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Simon on 15/07/15.
@@ -22,6 +23,15 @@ public class TestFuncIter extends TestCase {
     public void testCollect() {
         List<Integer> result = FuncIter.iter(1, 2, 3, 4).collect();
         assertEquals(4, result.size());
+    }
+
+    public void testCollectMap() {
+        Map<String, Integer> result = FuncIter.iter(1, 2, 3, 4).collectWithKeys(FuncIter.iter("one", "two", "three"));
+        // Only 3 keys
+        assertEquals(3, result.size());
+        assertEquals(1, result.get("one").intValue());
+        assertEquals(2, result.get("two").intValue());
+        assertEquals(3, result.get("three").intValue());
     }
 
     public void testChain() {

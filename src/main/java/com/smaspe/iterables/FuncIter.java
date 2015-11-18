@@ -1,6 +1,7 @@
 package com.smaspe.iterables;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -215,6 +216,18 @@ public class FuncIter<T> implements Iterable<T> {
         ArrayList<T> res = new ArrayList<>();
         for (T t : input) {
             res.add(t);
+        }
+        return res;
+    }
+
+    public <K> HashMap<K, T> collectWithKeys(Iterable<K> keys) {
+        return collectWithKeys(this, keys);
+    }
+
+    public static <K, V> HashMap<K, V> collectWithKeys(Iterable<V> values, Iterable<K> keys) {
+        HashMap<K, V> res = new HashMap<>();
+        for (Pair<K, V> t : from(keys).zip(values)) {
+            res.put(t.first, t.second);
         }
         return res;
     }
