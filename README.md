@@ -9,12 +9,12 @@ Or Maven
     <dependency>
       <groupId>com.github.smaspe</groupId>
       <artifactId>iterables</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
     </dependency>
 
 Or Gradle
 
-    compile group:'com.github.smaspe', name:'iterables', version: '0.1.0'
+    compile group:'com.github.smaspe', name:'iterables', version: '0.2.0'
 
 
 # Iterables
