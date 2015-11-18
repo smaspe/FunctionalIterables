@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/smaspe/FunctionalIterables.svg?branch=master)](https://travis-ci.org/smaspe/FunctionalIterables)
+
 # Use it
 
 [ ![Download](https://api.bintray.com/packages/smaspe/Default/FunctionalIterables/images/download.svg) ](https://bintray.com/smaspe/Default/FunctionalIterables/_latestVersion)
