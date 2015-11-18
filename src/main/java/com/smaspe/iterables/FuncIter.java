@@ -177,6 +177,15 @@ public class FuncIter<T> implements Iterable<T> {
         return false;
     }
 
+    public T firstOr(T defaultValue) {
+        return firstOr(this, defaultValue);
+    }
+
+    public static <T> T firstOr(Iterable<T> input, T defaultValue) {
+        Iterator<T> iterator = input.iterator();
+        return iterator.hasNext() ? iterator.next() : defaultValue;
+    }
+
     public <V> FuncIter<Pair<T, V>> zip(Iterable<V> with) {
         return zip(this, with);
     }

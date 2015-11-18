@@ -86,4 +86,12 @@ public class TestFuncIter extends TestCase {
         assertFalse(FuncIter.iter(1, 3, 4, 5, 6).all(t -> t % 2 == 0));
         assertTrue(FuncIter.iter(2, 4, 6).all(t -> t % 2 == 0));
     }
+
+    public void testFirst() {
+        FuncIter<String> two = FuncIter.iter("one", "two");
+        assertEquals("one", two.firstOr(null));
+        FuncIter<String> zero = FuncIter.iter();
+        assertNull(zero.firstOr(null));
+        assertEquals("value", zero.firstOr("value"));
+    }
 }
