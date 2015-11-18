@@ -16,21 +16,19 @@ group 'com.github.smaspe'
 version '0.2.0'
 
 
-allprojects {
-    repositories {
-        jcenter()
-    }
+repositories {
+    jcenter()
+}
 
-    apply plugin: 'maven'
-    apply plugin: 'maven-publish'
-    apply plugin: 'java'
-    apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
 
-    retrolambda {
-        jdk System.getenv("JAVA8_HOME")
-        oldJdk System.getenv("JAVA7_HOME")
-        javaVersion JavaVersion.VERSION_1_7
-    }
+retrolambda {
+    jdk System.getenv("JAVA8_HOME")
+    oldJdk System.getenv("JAVA7_HOME")
+    javaVersion JavaVersion.VERSION_1_6
 }
 
 
