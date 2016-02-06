@@ -11,12 +11,12 @@ Or Maven
     <dependency>
       <groupId>com.github.smaspe</groupId>
       <artifactId>iterables</artifactId>
-      <version>0.2.1</version>
+      <version>0.3.0</version>
     </dependency>
 
 Or Gradle
 
-    compile group:'com.github.smaspe', name:'iterables', version: '0.2.1'
+    compile group:'com.github.smaspe', name:'iterables', version: '0.3.0'
 
 
 # Iterables
@@ -90,3 +90,7 @@ A few extra things that are packaged with:
 - [ ] `count` param to `repeat`
 - [ ] Currying helpers
 - [ ] Similar helpers with Maps (possibly just collecting an `Iterable<Map.Entry<K, V>>` into a `Map`, the rest should be transparent)
+
+## Reminder
+
+To publish, `./gradlew bintrayUpload`
