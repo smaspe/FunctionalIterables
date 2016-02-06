@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/smaspe/FunctionalIterables.svg?branch=master)](https://travis-ci.org/smaspe/FunctionalIterables)
 
+[![codecov.io](https://codecov.io/github/smaspe/FunctionalIterables/coverage.svg?branch=master)](https://codecov.io/github/smaspe/FunctionalIterables?branch=master)
+
 # Use it
 
 [ ![Download](https://api.bintray.com/packages/smaspe/Default/FunctionalIterables/images/download.svg) ](https://bintray.com/smaspe/Default/FunctionalIterables/_latestVersion)
