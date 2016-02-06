@@ -104,7 +104,7 @@ public class TestFuncIter extends TestCase {
     }
 
     public void testZip() {
-        List<FuncIter.Pair<Integer, String>> result = FuncIter.iter(1, 2, 3, 4).zip(FuncIter.iter("one", "two", "three", "four", "five")).collect();
+        List<FuncIter.Pair<Integer, String>> result = FuncIter.iter(1, 2, 3, 4, 5).zip(FuncIter.iter("one", "two", "three", "four")).collect();
         assertEquals(1, result.get(0).first.intValue());
         assertEquals("one", result.get(0).second);
         assertEquals(4, result.get(3).first.intValue());
