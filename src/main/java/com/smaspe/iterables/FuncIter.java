@@ -72,6 +72,41 @@ public class FuncIter<T> implements Iterable<T> {
         });
     }
 
+
+    public static FuncIter<Long> range(long end) {
+        return range(0, end);
+    }
+
+    public static FuncIter<Long> range(long start, long end) {
+        return range(start, end, 1);
+    }
+
+    public static FuncIter<Long> range(long start, long end, long step) {
+        if (step == 0) {
+            throw new IllegalArgumentException("Step must not be 0");
+        }
+        return from(() -> new Iterator<Long>() {
+            private long nextValue = start;
+
+            @Override
+            public boolean hasNext() {
+                // step and (end - nextValue) are the same sign (i.e. nextValue is not *over* end
+                // )
+                return (end - nextValue) * step > 0;
+            }
+
+            @Override
+            public Long next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                long result = nextValue;
+                nextValue += step;
+                return result;
+            }
+        });
+    }
+
     public static <T> FuncIter<T> chain(Iterable<T>... iterables) {
         return chain(iter(iterables));
     }
@@ -119,6 +154,16 @@ public class FuncIter<T> implements Iterable<T> {
                 return func.call(iter.next());
             }
         });
+    }
+
+    public void each(Exec<T> func) {
+        each(this, func);
+    }
+
+    public static <T> void each(Iterable<T> input, Exec<T> func) {
+        for (T t : input) {
+            func.call(t);
+        }
     }
 
     public FuncIter<T> filter(Func<T, Boolean> func) {
@@ -234,6 +279,10 @@ public class FuncIter<T> implements Iterable<T> {
 
     public interface Func<T, R> {
         R call(T input);
+    }
+
+    public interface Exec<T> {
+        void call(T input);
     }
 
     public static class Pair<U, V> {

@@ -70,6 +70,13 @@ public class TestFuncIter extends TestCase {
         assertEquals(16, result.get(3).intValue());
     }
 
+    public void testEach() {
+        Map<String, String> value = new HashMap<>();
+        FuncIter.iter(value).each(i -> i.put("key", "value"));
+        assertEquals(1, value.size());
+        assertEquals("value", value.get("key"));
+    }
+
     public void testFilter() {
         try {
             Iterator<Integer> iterator = FuncIter.iter(1, 2, 3).filter(i -> false).iterator();
@@ -121,5 +128,55 @@ public class TestFuncIter extends TestCase {
         FuncIter<String> zero = FuncIter.iter();
         assertNull(zero.firstOr(null));
         assertEquals("value", zero.firstOr("value"));
+    }
+
+    public void testRange() {
+        try {
+            FuncIter.range(0,0,0);
+            fail();
+        } catch (Exception e) {
+            assertEquals(IllegalArgumentException.class, e.getClass());
+        }
+        try {
+            Iterator<Long> iterator = FuncIter.range(0, 0, 1).iterator();
+            assertFalse(iterator.hasNext());
+            iterator.next();
+            fail();
+        } catch (Exception e) {
+            assertEquals(NoSuchElementException.class, e.getClass());
+        }
+
+        List<Long> range = FuncIter.range(3).collect();
+        assertEquals(3, range.size());
+        assertEquals(0, range.get(0).intValue());
+        assertEquals(1, range.get(1).intValue());
+        assertEquals(2, range.get(2).intValue());
+
+        range = FuncIter.range(3, 7).collect();
+        assertEquals(4, range.size());
+        assertEquals(3, range.get(0).intValue());
+        assertEquals(4, range.get(1).intValue());
+        assertEquals(5, range.get(2).intValue());
+        assertEquals(6, range.get(3).intValue());
+
+        range = FuncIter.range(0, 4, 2).collect();
+        assertEquals(2, range.size());
+        assertEquals(0, range.get(0).intValue());
+        assertEquals(2, range.get(1).intValue());
+
+        range = FuncIter.range(0, 3, 2).collect();
+        assertEquals(2, range.size());
+        assertEquals(0, range.get(0).intValue());
+        assertEquals(2, range.get(1).intValue());
+
+        range = FuncIter.range(2, 0, -1).collect();
+        assertEquals(2, range.size());
+        assertEquals(2, range.get(0).intValue());
+        assertEquals(1, range.get(1).intValue());
+
+        range = FuncIter.range(3, 0, -2).collect();
+        assertEquals(2, range.size());
+        assertEquals(3, range.get(0).intValue());
+        assertEquals(1, range.get(1).intValue());
     }
 }
