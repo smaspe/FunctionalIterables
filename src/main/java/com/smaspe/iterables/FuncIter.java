@@ -22,7 +22,7 @@ public class FuncIter<T> implements Iterable<T> {
 
         @Override
         public Object next() {
-            return null;
+            throw new NoSuchElementException();
         }
     };
 
@@ -97,7 +97,7 @@ public class FuncIter<T> implements Iterable<T> {
         });
     }
 
-    public Iterable<T> chainWith(Iterable<T> next) {
+    public FuncIter<T> chainWith(Iterable<T> next) {
         return FuncIter.<T>chain(this, next);
     }
 

@@ -2,10 +2,7 @@ package com.smaspe.iterables;
 
 import junit.framework.TestCase;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Simon on 15/07/15.
@@ -35,6 +32,15 @@ public class TestFuncIter extends TestCase {
     }
 
     public void testChain() {
+        Iterator<?> chain = FuncIter.chain().iterator();
+        assertFalse(chain.hasNext());
+        try {
+            chain.next();
+            fail();
+        } catch (Exception e) {
+            assertEquals(NoSuchElementException.class, e.getClass());
+        }
+
         List<String> first = Arrays.asList("one", "bis");
         List<String> empty = Arrays.asList();
         List<String> second = Arrays.asList("two");
@@ -50,6 +56,10 @@ public class TestFuncIter extends TestCase {
         assertEquals("two", iterator.next());
         assertFalse(iterator.hasNext());
 
+        List<Integer> chained = FuncIter.iter(1, 2, 3).chainWith(FuncIter.iter(4, 5)).collect();
+        assertEquals(5, chained.size());
+        assertEquals(1, chained.get(0).intValue());
+        assertEquals(5, chained.get(4).intValue());
     }
 
     public void testMap() {
@@ -61,6 +71,14 @@ public class TestFuncIter extends TestCase {
     }
 
     public void testFilter() {
+        try {
+            Iterator<Integer> iterator = FuncIter.iter(1, 2, 3).filter(i -> false).iterator();
+            assertFalse(iterator.hasNext());
+            iterator.next();
+            fail();
+        } catch (Exception e) {
+            assertEquals(NoSuchElementException.class, e.getClass());
+        }
         List<Integer> result = FuncIter.iter(1, 2, 3, 4, 5, 6).filter(i -> i % 2 == 0).collect();
         assertEquals(2, result.get(0).intValue());
         assertEquals(4, result.get(1).intValue());
@@ -74,7 +92,7 @@ public class TestFuncIter extends TestCase {
         assertEquals("foo", result.next());
         assertEquals("foo", result.next());
         assertEquals("foo", result.next());
-        assertEquals("foo", result.next());
+        assertTrue(result.hasNext());
         // A teacher once told me that 5 is a good approximation for infinity.
     }
 
