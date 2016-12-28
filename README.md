@@ -15,12 +15,12 @@ Because other solutions are too big and complex, this fit in a single file and d
     <dependency>
       <groupId>com.github.smaspe</groupId>
       <artifactId>iterables</artifactId>
-      <version>0.4.0</version>
+      <version>0.4.1</version>
     </dependency>
 
 ## Gradle
 
-    compile group:'com.github.smaspe', name:'iterables', version: '0.4.0'
+    compile group:'com.github.smaspe', name:'iterables', version: '0.4.1'
 
 # Basics
 

@@ -204,4 +204,14 @@ public class TestFuncIter extends TestCase {
         ArrayList<FuncIter.Pair<Long, Object>> empty = FuncIter.iter().enumerate().collect();
         assertTrue(empty.isEmpty());
     }
+
+    public void testZipWith() {
+        FuncIter<Long> first = FuncIter.range(3);
+        FuncIter<Long> second = FuncIter.range(4, 10);
+        ArrayList<Long> result = first.zipWith((a, b) -> a * b, second).collect();
+        assertEquals(3, result.size());
+        assertEquals(0L, result.get(0).longValue());
+        assertEquals(5L, result.get(1).longValue());
+        assertEquals(12L, result.get(2).longValue());
+    }
 }

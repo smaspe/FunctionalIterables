@@ -237,25 +237,34 @@ public class FuncIter<T> implements Iterable<T> {
         return iterator.hasNext() ? iterator.next() : defaultValue;
     }
 
-    public <V> FuncIter<Pair<T, V>> zip(Iterable<V> with) {
-        return zip(this, with);
+    public <T2, R> FuncIter<R> zipWith(Func2<T, T2, R> zipper, Iterable<T2> seconds) {
+        return zipWith(zipper, this, seconds);
     }
 
-    public static <U, V> FuncIter<Pair<U, V>> zip(Iterable<U> firsts, Iterable<V> seconds) {
-        return from(() -> new Iterator<Pair<U, V>>() {
-            Iterator<U> iterFirst = firsts.iterator();
-            Iterator<V> iterSecond = seconds.iterator();
+    public static <T1, T2, R> FuncIter<R> zipWith(Func2<T1, T2, R> zipper, Iterable<T1> firsts, Iterable<T2> seconds) {
+        return from(() -> new Iterator<R>() {
+            Iterator<T1> iterFirst = firsts.iterator();
+            Iterator<T2> iterSecond = seconds.iterator();
 
             @Override
             public boolean hasNext() {
                 return iterFirst.hasNext() && iterSecond.hasNext();
             }
 
+
             @Override
-            public Pair<U, V> next() {
-                return new Pair<>(iterFirst.next(), iterSecond.next());
+            public R next() {
+                return zipper.call(iterFirst.next(), iterSecond.next());
             }
         });
+    }
+
+    public <V> FuncIter<Pair<T, V>> zip(Iterable<V> with) {
+        return zip(this, with);
+    }
+
+    public static <U, V> FuncIter<Pair<U, V>> zip(Iterable<U> firsts, Iterable<V> seconds) {
+        return zipWith(Pair::new, firsts, seconds);
     }
 
     public <R> R reduce(Func2<T, R, R> func, R accumulator) {
