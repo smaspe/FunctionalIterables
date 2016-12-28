@@ -253,6 +253,17 @@ public class FuncIter<T> implements Iterable<T> {
         });
     }
 
+    public <R> R reduce(Func2<T, R, R> func, R accumulator) {
+        return reduce(this, func, accumulator);
+    }
+
+    public static <T, R> R reduce(Iterable<T> input, Func2<T, R, R> func, R accumulator) {
+        for (T value : input) {
+            accumulator = func.call(value, accumulator);
+        }
+        return accumulator;
+    }
+
     public ArrayList<T> collect() {
         return collect(this);
     }
@@ -279,6 +290,10 @@ public class FuncIter<T> implements Iterable<T> {
 
     public interface Func<T, R> {
         R call(T input);
+    }
+
+    public interface Func2<T1, T2, R> {
+        R call(T1 first, T2 second);
     }
 
     public interface Exec<T> {

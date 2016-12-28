@@ -179,4 +179,13 @@ public class TestFuncIter extends TestCase {
         assertEquals(3, range.get(0).intValue());
         assertEquals(1, range.get(1).intValue());
     }
+
+    public void testReduce() {
+        FuncIter<Long> values = FuncIter.range(4);
+        assertEquals(6, (long) values.reduce((a, b) -> a + b, 0l));
+        assertEquals(42, (long) values.reduce((a, b) -> b, 42l));
+        assertEquals(3, (long) values.reduce((a, b) -> a, 42l));
+        FuncIter<String> empty = FuncIter.iter();
+        assertEquals(null, empty.reduce(null, null));
+    }
 }
