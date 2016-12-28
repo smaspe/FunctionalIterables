@@ -187,10 +187,21 @@ public class TestFuncIter extends TestCase {
         FuncIter<Long> values = FuncIter.range(2,4);
         List<Long> result = values.flatMap(FuncIter::range).collect();
         assertEquals(5, result.size());
-        assertEquals(0l, result.get(0).longValue());
-        assertEquals(1l, result.get(1).longValue());
-        assertEquals(0l, result.get(2).longValue());
-        assertEquals(1l, result.get(3).longValue());
-        assertEquals(2l, result.get(4).longValue());
+        assertEquals(0L, result.get(0).longValue());
+        assertEquals(1L, result.get(1).longValue());
+        assertEquals(0L, result.get(2).longValue());
+        assertEquals(1L, result.get(3).longValue());
+        assertEquals(2L, result.get(4).longValue());
+    }
+
+    public void testEnumerate() {
+        ArrayList<FuncIter.Pair<Long, String>> two = FuncIter.iter("one", "two").enumerate().collect();
+        assertEquals(2, two.size());
+        assertEquals("one", two.get(0).second);
+        assertEquals("two", two.get(1).second);
+        assertEquals(0L, two.get(0).first.longValue());
+        assertEquals(1L, two.get(1).first.longValue());
+        ArrayList<FuncIter.Pair<Long, Object>> empty = FuncIter.iter().enumerate().collect();
+        assertTrue(empty.isEmpty());
     }
 }

@@ -269,6 +269,15 @@ public class FuncIter<T> implements Iterable<T> {
         return accumulator;
     }
 
+    public FuncIter<Pair<Long, T>> enumerate() {
+        return enumerate(this);
+    }
+
+    public static <T> FuncIter<Pair<Long, T>> enumerate(Iterable<T> input) {
+        // It's ok, the range is an iterable, no value is created until it is consumed, and zip cuts to the shortest. May be add `count`, à la python itertools module
+        return zip(range(Long.MAX_VALUE), input);
+    }
+
     public ArrayList<T> collect() {
         return collect(this);
     }
