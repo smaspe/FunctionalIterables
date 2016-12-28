@@ -208,7 +208,7 @@ public class TestFuncIter extends TestCase {
     public void testZipWith() {
         FuncIter<Long> first = FuncIter.range(3);
         FuncIter<Long> second = FuncIter.range(4, 10);
-        ArrayList<Long> result = first.zipWith((a, b) -> a * b, second).collect();
+        ArrayList<Long> result = first.zipWith(second, (a, b) -> a * b).collect();
         assertEquals(3, result.size());
         assertEquals(0L, result.get(0).longValue());
         assertEquals(5L, result.get(1).longValue());

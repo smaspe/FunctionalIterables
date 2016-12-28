@@ -237,11 +237,11 @@ public class FuncIter<T> implements Iterable<T> {
         return iterator.hasNext() ? iterator.next() : defaultValue;
     }
 
-    public <T2, R> FuncIter<R> zipWith(Func2<T, T2, R> zipper, Iterable<T2> seconds) {
-        return zipWith(zipper, this, seconds);
+    public <T2, R> FuncIter<R> zipWith(Iterable<T2> seconds, Func2<T, T2, R> zipper) {
+        return zipWith(seconds, this, zipper);
     }
 
-    public static <T1, T2, R> FuncIter<R> zipWith(Func2<T1, T2, R> zipper, Iterable<T1> firsts, Iterable<T2> seconds) {
+    public static <T1, T2, R> FuncIter<R> zipWith(Iterable<T2> seconds, Iterable<T1> firsts, Func2<T1, T2, R> zipper) {
         return from(() -> new Iterator<R>() {
             Iterator<T1> iterFirst = firsts.iterator();
             Iterator<T2> iterSecond = seconds.iterator();
@@ -264,7 +264,7 @@ public class FuncIter<T> implements Iterable<T> {
     }
 
     public static <U, V> FuncIter<Pair<U, V>> zip(Iterable<U> firsts, Iterable<V> seconds) {
-        return zipWith(Pair::new, firsts, seconds);
+        return zipWith(seconds, firsts, Pair::new);
     }
 
     public <R> R reduce(Func2<T, R, R> func, R accumulator) {

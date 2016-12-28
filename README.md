@@ -15,12 +15,12 @@ Because other solutions are too big and complex, this fit in a single file and d
     <dependency>
       <groupId>com.github.smaspe</groupId>
       <artifactId>iterables</artifactId>
-      <version>0.4.1</version>
+      <version>0.4.2</version>
     </dependency>
 
 ## Gradle
 
-    compile group:'com.github.smaspe', name:'iterables', version: '0.4.1'
+    compile group:'com.github.smaspe', name:'iterables', version: '0.4.2'
 
 # Basics
 
@@ -48,6 +48,7 @@ Functions are divided in 3 groups:
 A few extra things that are packaged with:
 - `Pair<U,V>` a simple class that holds 2 values
 - `Func<T,R>` a simple functional interface with a method that has 1 parameter and returns something
+- `Func2<T1,T2,R>` same as the previous one, but with 2 parameters
 - `Exec<T>` a simple functional interface with a method that has 1 parameter and returns void
 
 # Usage
