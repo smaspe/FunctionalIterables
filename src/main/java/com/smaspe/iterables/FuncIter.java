@@ -107,33 +107,38 @@ public class FuncIter<T> implements Iterable<T> {
         });
     }
 
-    public static <T> FuncIter<T> chain(Iterable<T>... iterables) {
-        return chain(iter(iterables));
+    public <R> FuncIter<R> flatMap(Func<T, Iterable<R>> func) {
+        return flatMap(this, func);
     }
 
-    public static <T> FuncIter<T> chain(Iterable<? extends Iterable<T>> iterables) {
-        return from(() -> new Iterator<T>() {
-            Iterator<? extends Iterable<T>> iterator = iterables.iterator();
-            Iterator<T> current = EMPTY;
+    public static <T, R> FuncIter<R> flatMap(Iterable<T> iterables, Func<T, Iterable<R>> func) {
+        return from(() -> new Iterator<R>() {
+            Iterator<T> iterator = iterables.iterator();
+            Iterator<R> current = EMPTY;
 
             @Override
             public boolean hasNext() {
                 while (!current.hasNext() && iterator.hasNext()) {
-                    current = iterator.next().iterator();
+                    current = func.call(iterator.next()).iterator();
                 }
                 return current.hasNext();
             }
 
             @Override
-            public T next() {
+            public R next() {
                 hasNext();
                 return current.next();
             }
         });
     }
 
+    @SafeVarargs
+    public static <T> FuncIter<T> chain(Iterable<T>... iterables) {
+        return flatMap(iter(iterables), a -> a);
+    }
+
     public FuncIter<T> chainWith(Iterable<T> next) {
-        return FuncIter.<T>chain(this, next);
+        return chain(this, next);
     }
 
     public <R> FuncIter<R> map(Func<T, R> func) {

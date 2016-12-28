@@ -50,12 +50,6 @@ public class TestFuncIter extends TestCase {
         assertEquals("two", iterator.next());
         assertFalse(iterator.hasNext());
 
-        iterator = FuncIter.chain(Arrays.asList(first, empty, second)).iterator();
-        assertEquals("one", iterator.next());
-        assertEquals("bis", iterator.next());
-        assertEquals("two", iterator.next());
-        assertFalse(iterator.hasNext());
-
         List<Integer> chained = FuncIter.iter(1, 2, 3).chainWith(FuncIter.iter(4, 5)).collect();
         assertEquals(5, chained.size());
         assertEquals(1, chained.get(0).intValue());
@@ -187,5 +181,16 @@ public class TestFuncIter extends TestCase {
         assertEquals(3, (long) values.reduce((a, b) -> a, 42l));
         FuncIter<String> empty = FuncIter.iter();
         assertEquals(null, empty.reduce(null, null));
+    }
+
+    public void testFlatMap() {
+        FuncIter<Long> values = FuncIter.range(2,4);
+        List<Long> result = values.flatMap(FuncIter::range).collect();
+        assertEquals(5, result.size());
+        assertEquals(0l, result.get(0).longValue());
+        assertEquals(1l, result.get(1).longValue());
+        assertEquals(0l, result.get(2).longValue());
+        assertEquals(1l, result.get(3).longValue());
+        assertEquals(2l, result.get(4).longValue());
     }
 }
