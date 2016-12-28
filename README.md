@@ -15,12 +15,12 @@ Because other solutions are too big and complex, this fit in a single file and d
     <dependency>
       <groupId>com.github.smaspe</groupId>
       <artifactId>iterables</artifactId>
-      <version>0.3.0</version>
+      <version>0.4.0</version>
     </dependency>
 
 ## Gradle
 
-    compile group:'com.github.smaspe', name:'iterables', version: '0.3.0'
+    compile group:'com.github.smaspe', name:'iterables', version: '0.4.0'
 
 # Basics
 
@@ -61,6 +61,7 @@ A few extra things that are packaged with:
 
 ## Functional stuff that return more iterables
 - `map` - Transforms `T` to `R` according to the mapping functions
+- `flatMap` - Transforms 1 `T` to n `R` in the same resulting iterable
 - `filter` - Only returns the `T` that match the predicate
 - `zip` - Combine `T1` and `T2` into `Pair<T1, T2>`
 
@@ -68,8 +69,8 @@ A few extra things that are packaged with:
 - `any` - Stops as soon as a value matches the predicate
 - `all` - Stops as soon as a value does not match the predicate
 - `firstOr` - Self-explanatory
-- `each`
-- **`reduce`** - Not implemented yet
+- `each` - Calls the function on each element of the iterable immediately. Does not return any result.
+- `reduce` - Applies the function to the values of the iterable in order, passing the previous result.
 
 ## Collecting
 - `collect` - Gives you an `ArrayList`. Don't try to `collect` `repeat`.
@@ -77,15 +78,15 @@ A few extra things that are packaged with:
 ## TODO
 - [x] Actually work with java 7 and retrolambda
 - [x] Publish on maven central, add the gradle line here
-- [ ] Create the basic functions.
+- [x] Create the basic functions.
     - [x] wrappers and creators,
     - [x] chain,
     - [x] map,
     - [x] filter,
     - [x] find,
-    - [ ] reduce,
-    - [ ] max (-> reduce + Comparator),
-    - [ ] sum (longs and doubles?) (-> reduce),
+    - [x] reduce,
+    - ~~[ ] max (-> reduce + Comparator),~~
+    - ~~[ ] sum (longs and doubles?) (-> reduce),~~
     - [x] zip,
     - [x] all,
     - [x] any,
