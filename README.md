@@ -86,16 +86,17 @@ A few extra things that are packaged with:
     - [x] filter,
     - [x] find,
     - [x] reduce,
-    - ~~[ ] max (-> reduce + Comparator),~~
-    - ~~[ ] sum (longs and doubles?) (-> reduce),~~
+    - ~~max (-> reduce + Comparator),~~
+    - ~~sum (longs and doubles?) (-> reduce),~~
     - [x] zip,
     - [x] all,
     - [x] any,
     - [x] range
 - [x] Publish on maven central, add the gradle line here
-- [ ] `until` function to `collect`
-- [ ] `count` param to `repeat`
-- [ ] Or, `until` function on `FuncIter` (with opt. inclusive flag), and `firstN` function on `FuncIter` as well
+- ~~`until` function to `collect`~~
+- ~~`count` param to `repeat`~~
+- [ ] `until` function on `FuncIter` (with opt. inclusive flag), 
+- [ ] `firstN` function on `FuncIter` as well
 - [ ] Currying helpers
 
 # Licence
